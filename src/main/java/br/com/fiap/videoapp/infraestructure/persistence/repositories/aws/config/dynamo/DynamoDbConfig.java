@@ -1,4 +1,4 @@
-package br.com.fiap.videoapp.infraestructure.persistence.repositories.dynamo.config;
+package br.com.fiap.videoapp.infraestructure.persistence.repositories.aws.config.dynamo;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

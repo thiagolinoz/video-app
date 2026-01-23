@@ -4,6 +4,6 @@ import br.com.fiap.videoapp.domain.models.VideoModel;
 
 import java.util.List;
 
-public interface VideoServicePort {
+public interface VideoMetadataServicePort {
     List<VideoModel> listVideos(String email);
 }

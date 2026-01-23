@@ -1,15 +1,16 @@
 package br.com.fiap.videoapp.infraestructure.web.api.controllers;
 
 import br.com.fiap.videoapp.domain.models.VideoModel;
-import br.com.fiap.videoapp.domain.ports.in.VideoServicePort;
+import br.com.fiap.videoapp.domain.ports.in.VideoMetadataServicePort;
+import br.com.fiap.videoapp.domain.ports.in.VideoStorageServicePort;
 import br.com.fiap.videoapp.infraestructure.commons.mappers.VideoMapper;
 import br.com.fiap.videoapp.infraestructure.web.api.dtos.VideoResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URI;
 import java.util.List;
 
 @Service
@@ -17,16 +18,26 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class VideoController {
 
-    private final VideoServicePort videoServicePort;
+    private final VideoMetadataServicePort videoMetadataServicePort;
 
-    public VideoController(VideoServicePort videoServicePort) {
-        this.videoServicePort = videoServicePort;
+    private final VideoStorageServicePort videoStorageServicePort;
+
+    public VideoController(VideoMetadataServicePort videoMetadataServicePort,
+                           VideoStorageServicePort videoStorageServicePort) {
+        this.videoMetadataServicePort = videoMetadataServicePort;
+        this.videoStorageServicePort = videoStorageServicePort;
     }
-
+    //TODO verificar como recuperar o email logado
     @GetMapping("/user/videos")
     public ResponseEntity<List<VideoResponseDto>> listVideos() {
-        List<VideoModel> videoModel = videoServicePort.listVideos("email@email.com");
+        List<VideoModel> videoModel = videoMetadataServicePort.listVideos("email@email.com");
 
         return ResponseEntity.ok(VideoMapper.toListResponse(videoModel));
+    }
+
+    @PostMapping("/user/videos/upload")
+    public ResponseEntity<Void> uploadVideo(@RequestParam("file") MultipartFile file) {
+        videoStorageServicePort.store(file);
+        return ResponseEntity.created(URI.create("/api/v1/user/videos/upload")).build();
     }
 }
