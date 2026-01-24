@@ -22,11 +22,17 @@ services:
       - DYNAMO_ENDPOINT=http://dynamodb-local:8000
       - AWS_REGION=ap-southeast-1
 
-  fiap-fastfood:
-    build: .
-    container_name: fiap-fastfood
-    depends_on:
-      - dynamodb-local
-    restart: no
+  localstack:
+    image: localstack/localstack:latest
     ports:
-      - 8088:8080
+      - "127.0.0.1:4566:4566"
+    environment:
+      - SERVICES=s3
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - localstack_data:/var/lib/localstack
+      - ./init-s3.sh:/etc/localstack/init/ready.d/init-s3.sh
+
+volumes:
+  localstack_data:

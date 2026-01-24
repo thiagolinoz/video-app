@@ -34,3 +34,9 @@ build/
 
 ### Terraform ###
 infra/.terraform/
+
+#### maven ####
+.mvn/
+data/
+mvnw
+mvnw.cmd

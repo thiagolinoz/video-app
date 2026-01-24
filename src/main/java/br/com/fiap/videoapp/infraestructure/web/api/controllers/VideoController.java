@@ -35,6 +35,7 @@ public class VideoController {
         return ResponseEntity.ok(VideoMapper.toListResponse(videoModel));
     }
 
+    //TODO pedir email no header? e recuperar dados do usuario
     @PostMapping("/user/videos/upload")
     public ResponseEntity<Void> uploadVideo(@RequestParam("file") MultipartFile file) {
         videoStorageServicePort.store(file);

@@ -3,7 +3,6 @@ package br.com.fiap.videoapp.domain.services;
 import br.com.fiap.videoapp.domain.models.VideoModel;
 import br.com.fiap.videoapp.domain.ports.in.VideoMetadataServicePort;
 import br.com.fiap.videoapp.domain.ports.out.VideoMetadaRepositoryPort;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

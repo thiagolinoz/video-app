@@ -1,6 +1,7 @@
 package br.com.fiap.videoapp.infraestructure.persistence.repositories.aws.config.dynamo;
 
 import br.com.fiap.videoapp.infraestructure.persistence.entities.PersonEntity;
+import br.com.fiap.videoapp.infraestructure.persistence.entities.VideoEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,7 @@ import org.springframework.context.event.EventListener;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.services.dynamodb.model.ResourceInUseException;
 
 @Configuration
 public class DynamoDbInitializer {
@@ -22,14 +24,20 @@ public class DynamoDbInitializer {
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    public void setupTables() {
+    public void init() {
         if (!shouldCreate) return;
-        DynamoDbTable<PersonEntity> table = enhancedClient.table("Persons", TableSchema.fromBean(PersonEntity.class));
+        setupTables(PersonEntity.class, "Persons");
+        setupTables(VideoEntity.class, "Videos");
+    }
 
+    public void setupTables(Class<?> clazz, String tableName) {
         try {
+            DynamoDbTable<?> table = enhancedClient.table(tableName, TableSchema.fromBean(clazz));
             table.createTable();
+        }catch (ResourceInUseException re) {
+            System.out.println("Table already exists");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 }
