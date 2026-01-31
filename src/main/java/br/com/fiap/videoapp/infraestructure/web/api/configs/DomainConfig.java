@@ -25,7 +25,8 @@ public class DomainConfig {
 
     @Bean
     public VideoStorageService videoStorageService(VideoStorageRepositoryPort videoStorageRepositoryPort,
-                                                   FileEventPublisherPort fileEventPublisherPort) {
-        return new VideoStorageService(videoStorageRepositoryPort, fileEventPublisherPort);
+                                                   FileEventPublisherPort fileEventPublisherPort,
+                                                   PersonRepositoryPort personRepositoryPort) {
+        return new VideoStorageService(videoStorageRepositoryPort, fileEventPublisherPort, personRepositoryPort);
     }
 }

@@ -27,18 +27,17 @@ public class VideoController {
         this.videoMetadataServicePort = videoMetadataServicePort;
         this.videoStorageServicePort = videoStorageServicePort;
     }
-    //TODO verificar como recuperar o email logado
-    @GetMapping("/user/videos")
-    public ResponseEntity<List<VideoResponseDto>> listVideos() {
-        List<VideoModel> videoModel = videoMetadataServicePort.listVideos("email@email.com");
+
+    @GetMapping("/user/videos/{email}")
+    public ResponseEntity<List<VideoResponseDto>> listVideos(@PathVariable("email") String email) {
+        List<VideoModel> videoModel = videoMetadataServicePort.listVideos(email);
 
         return ResponseEntity.ok(VideoMapper.toListResponse(videoModel));
     }
 
-    //TODO pedir email no header? e recuperar dados do usuario
-    @PostMapping("/user/videos/upload")
-    public ResponseEntity<Void> uploadVideo(@RequestParam("file") MultipartFile file) {
-        videoStorageServicePort.store(file);
+    @PostMapping("/user/videos/upload/{email}")
+    public ResponseEntity<Void> uploadVideo(@RequestParam("file") MultipartFile file, @PathVariable("email") String email) {
+        videoStorageServicePort.store(file, email);
         return ResponseEntity.created(URI.create("/api/v1/user/videos/upload")).build();
     }
 }
