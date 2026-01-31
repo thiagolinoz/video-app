@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
+import software.amazon.awssdk.services.s3.S3CrtAsyncClientBuilder;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
 
 import java.net.URI;
@@ -19,17 +20,22 @@ public class S3Config {
     @Value("${aws.region}")
     private String region;
 
-    @Value("${aws.s3.local-stack}")
+    @Value("${aws.s3.local-stack:false}")
     private Boolean isLocal;
 
     @Bean
     public S3AsyncClient s3AsyncClient() {
-        return S3AsyncClient.crtBuilder()
-                .endpointOverride(URI.create(endpoint))
+
+        S3CrtAsyncClientBuilder builder = S3AsyncClient.crtBuilder()
                 .region(Region.of(region))
-                .forcePathStyle(isLocal)
-                .credentialsProvider(credentialsProvider())
-                .build();
+                .credentialsProvider(credentialsProvider());
+
+        if (isLocal) {
+            builder.endpointOverride(URI.create(endpoint))
+                    .forcePathStyle(true);
+        }
+
+        return builder.build();
     }
 
     @Bean
