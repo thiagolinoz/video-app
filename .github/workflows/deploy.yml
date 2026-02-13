@@ -68,4 +68,3 @@ jobs:
           kubectl apply -f ./k8s/configmap.yaml
           kubectl apply -f ./k8s/application/application-service.yaml
           kubectl apply -f ./k8s/application/application-deployment.yaml
-          kubectl get services app-service
