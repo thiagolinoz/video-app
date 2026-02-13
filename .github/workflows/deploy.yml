@@ -25,7 +25,7 @@ jobs:
           cache: 'maven'
 
       - name: Fazer o build da aplicação (JAR)
-        run: mvn package -DskipTests
+        run: mvn clean package -DskipTests
 
       - name: Configurar credenciais da AWS
         uses: aws-actions/configure-aws-credentials@v4
