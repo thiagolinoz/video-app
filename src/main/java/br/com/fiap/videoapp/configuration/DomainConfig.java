@@ -1,4 +1,4 @@
-package br.com.fiap.videoapp.infraestructure.web.api.configs;
+package br.com.fiap.videoapp.configuration;
 
 import br.com.fiap.videoapp.domain.ports.out.FileEventPublisherPort;
 import br.com.fiap.videoapp.domain.ports.out.PersonRepositoryPort;

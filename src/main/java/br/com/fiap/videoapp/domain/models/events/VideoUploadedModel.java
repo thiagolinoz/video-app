@@ -1,6 +1,7 @@
 package br.com.fiap.videoapp.domain.models.events;
 
 import java.time.Instant;
+import java.util.Date;
 
 public record VideoUploadedModel(
         String nmPessoaEmail,
@@ -9,8 +10,8 @@ public record VideoUploadedModel(
         String nmVideo,
         String nmVideoPathOrigin,
         String nmVideoPathZip,
-        Instant dateTimeVideoCreated,
-        Instant dateTimeVideoProcessCompleted,
+        Date dateTimeVideoCreated,
+        Date dateTimeVideoProcessCompleted,
         String nmPersonName
 ) {
 }

@@ -32,7 +32,14 @@ public class VideoStorageService implements VideoStorageServicePort {
 
     @Override
     public void store(MultipartFile file, String email) {
-        Optional<PersonModel> personByEmail = personRepositoryPort.getPersonByEmail(email);
+//        Optional<PersonModel> personByEmail = personRepositoryPort.getPersonByEmail(email);
+        // TODO: Remover mock para integração com o dynamo
+        Optional<PersonModel> personByEmail = Optional.ofNullable(new PersonModel.Builder()
+                .setNmName("MOCK_DO_MYKIN")
+                .setNmEmail("mykemaster@hotmail.com")
+                .setCdPassword("Mykesenha")
+                .build());
+
         if (personByEmail.isEmpty()) throw new RuntimeException("This person does not exists");
 
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
@@ -40,7 +47,7 @@ public class VideoStorageService implements VideoStorageServicePort {
         String idVideo = UUID.randomUUID().toString();
 
         try {
-            videoStorageRepositoryPort.store(file, fileName);
+//            videoStorageRepositoryPort.store(file, fileName);
         } catch (RuntimeException e) {
             videoStatus = VideoStatusEnum.PROCESS_ERROR;
             logger.log(Level.SEVERE, "An error occurred to upload a file", e);
@@ -52,7 +59,7 @@ public class VideoStorageService implements VideoStorageServicePort {
                 videoStatus,
                 personByEmail.get()
         );
-
+        logger.log(Level.INFO, "start publish message for new video");
         fileEventPublisherPort.publish(videoUploadedModel);
     }
 }

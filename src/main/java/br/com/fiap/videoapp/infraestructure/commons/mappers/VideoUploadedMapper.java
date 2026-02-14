@@ -1,6 +1,7 @@
 package br.com.fiap.videoapp.infraestructure.commons.mappers;
 
 import java.time.Instant;
+import java.util.Date;
 
 import br.com.fiap.videoapp.domain.enums.VideoStatusEnum;
 import br.com.fiap.videoapp.domain.models.PersonModel;
@@ -19,7 +20,7 @@ public class VideoUploadedMapper {
                 fileNameStorage,
                 "paths3/" + fileNameStorage,
                 null,
-                Instant.now(),
+                Date.from(Instant.now()),
                 null,
                 person.getNmName()
         );
