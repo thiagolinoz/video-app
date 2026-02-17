@@ -14,17 +14,15 @@ public class FileEventPublisher implements FileEventPublisherPort {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final VideoUploadedMapper mapper;
 
-    public FileEventPublisher(KafkaTemplate<String, String> kafkaTemplate, VideoUploadedMapper mapper) {
+    public FileEventPublisher(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
-        this.mapper = mapper;
     }
 
     @Override
     public void publish(VideoModel videoModel) {
         //CloudEventMapper.toCloudEvent(videoModel);
-        VideoUploadedModel videoUploadedModel = mapper.toVideoUploadedModel(videoModel);
+        VideoUploadedModel videoUploadedModel = VideoUploadedMapper.toVideoUploadedModel(videoModel);
         try {
             String payload = objectMapper.writeValueAsString(videoUploadedModel);
             kafkaTemplate.send("received-videos", payload);

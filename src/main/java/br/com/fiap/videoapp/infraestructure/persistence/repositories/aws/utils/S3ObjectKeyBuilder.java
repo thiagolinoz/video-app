@@ -1,7 +1,10 @@
 package br.com.fiap.videoapp.infraestructure.persistence.repositories.aws.utils;
 
+import org.springframework.stereotype.Service;
+
 import java.text.Normalizer;
 
+@Service
 public class S3ObjectKeyBuilder {
 
     public String buildVideoKey(

@@ -1,10 +1,7 @@
 package br.com.fiap.videoapp.infraestructure.commons.mappers;
 
-import java.time.Instant;
 import java.util.Date;
 
-import br.com.fiap.videoapp.domain.enums.VideoStatusEnum;
-import br.com.fiap.videoapp.domain.models.PersonModel;
 import br.com.fiap.videoapp.domain.models.VideoModel;
 import br.com.fiap.videoapp.domain.models.events.VideoUploadedModel;
 
