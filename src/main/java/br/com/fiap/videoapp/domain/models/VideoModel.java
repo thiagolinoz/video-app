@@ -38,22 +38,19 @@ public class VideoModel {
         this.nmPersonName = nmPersonName;
     }
 
-    public static VideoModel buildVideoModel(String idVideo,
-                                             String fileNameStorage,
-                                             String savedFilePath,
-                                             VideoStatusEnum videoStatus,
-                                             PersonModel person){
-    return new VideoModel(
-                person.getNmEmail(),
-                idVideo,
-                videoStatus.name(),
-                fileNameStorage,
-                savedFilePath,
-                null,
-                Instant.now(),
-                null,
-                person.getNmName()
-        );
+    public VideoModel buildVideoModel(String idVideo, String savedFileName, String savedFilePath, VideoStatusEnum videoStatus, PersonModel person) {
+        VideoModel videoModel = new VideoModel();
+        videoModel.setNmPersonEmail(person.getNmEmail());
+        videoModel.setIdVideoSend(idVideo);
+        videoModel.setCdVideoStatus(videoStatus.name());
+        videoModel.setNmVideo(savedFileName);
+        videoModel.setNmVideoPathOrigin(savedFilePath);
+        videoModel.setNmVideoPathZip(null);
+        videoModel.setDateTimeVideoCreated(Instant.now());
+        videoModel.setDateTimeVideoProcessCompleted(null);
+        videoModel.setNmPersonName(person.getNmName());
+
+        return videoModel;
     }
 
     public String getNmPersonEmail() {

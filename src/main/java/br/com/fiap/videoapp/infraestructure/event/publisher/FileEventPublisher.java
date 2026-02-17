@@ -8,12 +8,15 @@ import br.com.fiap.videoapp.infraestructure.commons.mappers.VideoUploadedMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class FileEventPublisher implements FileEventPublisherPort {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final Logger logger = Logger.getLogger(FileEventPublisher.class.getName());
 
     public FileEventPublisher(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
@@ -25,6 +28,7 @@ public class FileEventPublisher implements FileEventPublisherPort {
         VideoUploadedModel videoUploadedModel = VideoUploadedMapper.toVideoUploadedModel(videoModel);
         try {
             String payload = objectMapper.writeValueAsString(videoUploadedModel);
+            logger.log(Level.INFO, "Publishing message = ", videoUploadedModel.toString());
             kafkaTemplate.send("received-videos", payload);
         } catch (Exception e) {
             throw new RuntimeException(e);

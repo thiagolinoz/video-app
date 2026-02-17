@@ -16,8 +16,10 @@ import br.com.fiap.videoapp.domain.ports.out.VideoMetadaRepositoryPort;
 import br.com.fiap.videoapp.domain.ports.out.VideoStorageRepositoryPort;
 import br.com.fiap.videoapp.infraestructure.commons.mappers.VideoMapper;
 import br.com.fiap.videoapp.infraestructure.commons.mappers.VideoUploadedMapper;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+@Service
 public class VideoStorageService implements VideoStorageServicePort {
 
     private static final String uploadVideoPath = "videos";
@@ -56,7 +58,8 @@ public class VideoStorageService implements VideoStorageServicePort {
             // Upload to S3
             String savedFilePath = videoStorageRepositoryPort.store(file, fileName, uploadVideoPath, personByEmail.get());
 
-            VideoModel videoModel = VideoModel.buildVideoModel(idVideo,
+            VideoModel videoModel = new VideoModel();
+            videoModel.buildVideoModel(idVideo,
                 fileName,
                 savedFilePath,
                 videoStatus,

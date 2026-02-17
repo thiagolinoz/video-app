@@ -2,6 +2,7 @@ package br.com.fiap.videoapp.infraestructure.persistence.repositories;
 
 import br.com.fiap.videoapp.domain.models.VideoModel;
 import br.com.fiap.videoapp.domain.ports.out.VideoMetadaRepositoryPort;
+import br.com.fiap.videoapp.domain.services.VideoStorageService;
 import br.com.fiap.videoapp.infraestructure.commons.mappers.PersonMapper;
 import br.com.fiap.videoapp.infraestructure.commons.mappers.VideoMapper;
 import br.com.fiap.videoapp.infraestructure.commons.mappers.VideoUploadedMapper;
@@ -15,11 +16,14 @@ import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class VideoMetadaRepository implements VideoMetadaRepositoryPort {
 
     private final DynamoDbTable<VideoEntity> tableVideo;
+    private static final Logger logger = Logger.getLogger(VideoMetadaRepository.class.getName());
 
     public VideoMetadaRepository(DynamoDbEnhancedClient enhancedClient) {
         TableSchema<VideoEntity> schema = TableSchema.fromBean(VideoEntity.class);
@@ -43,6 +47,7 @@ public class VideoMetadaRepository implements VideoMetadaRepositoryPort {
     @Override
     public VideoModel save(VideoModel video) {
         VideoEntity videoEntity = VideoMapper.toEntity(video);
+        logger.log(Level.INFO, "Saving VideoEntity = ", videoEntity.toString());
         tableVideo.putItem(videoEntity);
         return VideoMapper.toModel(videoEntity);
     }

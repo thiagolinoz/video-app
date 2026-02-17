@@ -32,7 +32,7 @@ public class S3ObjectKeyBuilder {
         normalized = normalized
                 .toLowerCase()
                 .replaceAll("\\s+", "-")
-                .replaceAll("[^a-z0-9\\.-]", "");
+                .replaceAll("[^a-z0-9\\._-]", "");
 
         return normalized;
     }
