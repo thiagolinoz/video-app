@@ -124,4 +124,19 @@ public class VideoModel {
     public void setNmPersonName(String nmPersonName) {
         this.nmPersonName = nmPersonName;
     }
+
+    @Override
+    public String toString() {
+        return "VideoModel{" +
+                "nmPersonEmail='" + nmPersonEmail + '\'' +
+                ", idVideoSend='" + idVideoSend + '\'' +
+                ", cdVideoStatus='" + cdVideoStatus + '\'' +
+                ", nmVideo='" + nmVideo + '\'' +
+                ", nmVideoPathOrigin='" + nmVideoPathOrigin + '\'' +
+                ", nmVideoPathZip='" + nmVideoPathZip + '\'' +
+                ", dateTimeVideoCreated=" + dateTimeVideoCreated +
+                ", dateTimeVideoProcessCompleted=" + dateTimeVideoProcessCompleted +
+                ", nmPersonName='" + nmPersonName + '\'' +
+                '}';
+    }
 }

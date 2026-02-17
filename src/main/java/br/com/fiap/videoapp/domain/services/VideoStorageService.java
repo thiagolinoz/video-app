@@ -64,6 +64,7 @@ public class VideoStorageService implements VideoStorageServicePort {
                 savedFilePath,
                 videoStatus,
                 personByEmail.get());
+            logger.log(Level.INFO, "video model: " + videoModel);
 
             // Save DynamoDb
             logger.log(Level.INFO, "start save metadata for new video");
