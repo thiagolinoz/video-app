@@ -18,10 +18,10 @@ public class DomainConfig {
         return new PersonService(personRepositoryPort);
     }
 
-    @Bean
-    public VideoMetadataService videoService(VideoMetadaRepositoryPort videoMetadaRepositoryPort) {
-        return new VideoMetadataService(videoMetadaRepositoryPort);
-    }
+//    @Bean
+//    public VideoMetadataService videoService(VideoMetadaRepositoryPort videoMetadaRepositoryPort) {
+//        return new VideoMetadataService(videoMetadaRepositoryPort);
+//    }
 
     @Bean
     public VideoStorageService videoStorageService(VideoMetadaRepositoryPort metadaRepositoryPort,
