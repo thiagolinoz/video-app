@@ -8,14 +8,11 @@ import java.util.logging.Logger;
 import br.com.fiap.videoapp.domain.enums.VideoStatusEnum;
 import br.com.fiap.videoapp.domain.models.PersonModel;
 import br.com.fiap.videoapp.domain.models.VideoModel;
-import br.com.fiap.videoapp.domain.models.events.VideoUploadedModel;
 import br.com.fiap.videoapp.domain.ports.in.VideoStorageServicePort;
 import br.com.fiap.videoapp.domain.ports.out.FileEventPublisherPort;
 import br.com.fiap.videoapp.domain.ports.out.PersonRepositoryPort;
 import br.com.fiap.videoapp.domain.ports.out.VideoMetadaRepositoryPort;
 import br.com.fiap.videoapp.domain.ports.out.VideoStorageRepositoryPort;
-import br.com.fiap.videoapp.infraestructure.commons.mappers.VideoMapper;
-import br.com.fiap.videoapp.infraestructure.commons.mappers.VideoUploadedMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,7 +71,9 @@ public class VideoStorageService implements VideoStorageServicePort {
             logger.log(Level.INFO, "start publish message for new video");
             fileEventPublisherPort.publishNewVideo(videoModel);
 
-            // TODO: Implementar publish da fila de status
+            logger.log(Level.INFO, "start publish message for new video status");
+            fileEventPublisherPort.publishStatusVideo(videoModel);
+
         } catch (RuntimeException e) {
             videoStatus = VideoStatusEnum.PROCESS_ERROR;
             logger.log(Level.SEVERE, "An error occurred to upload a file", e);

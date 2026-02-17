@@ -1,15 +1,10 @@
 package br.com.fiap.videoapp.infraestructure.commons.mappers;
 
-import br.com.fiap.videoapp.domain.enums.VideoStatusEnum;
-import br.com.fiap.videoapp.domain.models.PersonModel;
 import br.com.fiap.videoapp.domain.models.VideoModel;
-import br.com.fiap.videoapp.domain.models.events.VideoUploadedModel;
 import br.com.fiap.videoapp.infraestructure.persistence.entities.VideoEntity;
 import br.com.fiap.videoapp.infraestructure.web.api.dtos.VideoResponseDto;
 
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class VideoMapper {

@@ -1,8 +1,8 @@
-package br.com.fiap.videoapp.domain.models.events;
+package br.com.fiap.videoapp.infraestructure.event.messages;
 
 import java.util.Date;
 
-public record VideoUploadedModel(
+public record VideoUploadedMessage(
         String nmPessoaEmail,
         String idVideoSend,
         String cdVideoStatus,
