@@ -3,7 +3,7 @@ package br.com.fiap.videoapp.infraestructure.event.messages;
 import java.util.Date;
 
 public record VideoUploadedMessage(
-        String nmPessoaEmail,
+        String nmPersonEmail,
         String idVideoSend,
         String cdVideoStatus,
         String nmVideo,
@@ -16,7 +16,7 @@ public record VideoUploadedMessage(
     @Override
     public String toString() {
         return "VideoUploadedModel{" +
-                "nmPessoaEmail='" + nmPessoaEmail + '\'' +
+                "nmPersonEmail='" + nmPersonEmail + '\'' +
                 ", idVideoSend='" + idVideoSend + '\'' +
                 ", cdVideoStatus='" + cdVideoStatus + '\'' +
                 ", nmVideo='" + nmVideo + '\'' +

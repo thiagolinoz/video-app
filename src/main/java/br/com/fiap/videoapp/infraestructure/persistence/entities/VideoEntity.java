@@ -103,7 +103,7 @@ public class VideoEntity {
     @Override
     public String toString() {
         return "VideoEntity{" +
-                "nmPessoaEmail='" + nmPessoaEmail + '\'' +
+                "nmPersonEmail='" + nmPessoaEmail + '\'' +
                 ", idVideoSend='" + idVideoSend + '\'' +
                 ", cdVideoStatus='" + cdVideoStatus + '\'' +
                 ", nmVideo='" + nmVideo + '\'' +
