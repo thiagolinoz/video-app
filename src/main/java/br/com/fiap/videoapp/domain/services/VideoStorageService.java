@@ -58,12 +58,11 @@ public class VideoStorageService implements VideoStorageServicePort {
             // Upload to S3
             String savedFilePath = videoStorageRepositoryPort.store(file, fileName, uploadVideoPath, personByEmail.get());
 
-            VideoModel videoModel = new VideoModel();
-            videoModel.buildVideoModel(idVideo,
-                fileName,
-                savedFilePath,
-                videoStatus,
-                personByEmail.get());
+            VideoModel videoModel = new VideoModel().buildVideoModel(idVideo,
+                    fileName,
+                    savedFilePath,
+                    videoStatus,
+                    personByEmail.get());
             logger.log(Level.INFO, "video model: " + videoModel);
 
             // Save DynamoDb
