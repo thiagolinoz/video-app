@@ -72,7 +72,7 @@ public class VideoStorageService implements VideoStorageServicePort {
 
             // Publish Kafka
             logger.log(Level.INFO, "start publish message for new video");
-            fileEventPublisherPort.publish(videoModel);
+            fileEventPublisherPort.publishNewVideo(videoModel);
 
             // TODO: Implementar publish da fila de status
         } catch (RuntimeException e) {

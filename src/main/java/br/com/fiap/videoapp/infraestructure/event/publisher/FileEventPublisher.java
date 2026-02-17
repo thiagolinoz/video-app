@@ -23,7 +23,7 @@ public class FileEventPublisher implements FileEventPublisherPort {
     }
 
     @Override
-    public void publish(VideoModel videoModel) {
+    public void publishNewVideo(VideoModel videoModel) {
         //CloudEventMapper.toCloudEvent(videoModel);
         VideoUploadedModel videoUploadedModel = VideoUploadedMapper.toVideoUploadedModel(videoModel);
         try {
