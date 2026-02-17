@@ -1,7 +1,8 @@
 package br.com.fiap.videoapp.domain.ports.out;
 
+import br.com.fiap.videoapp.domain.models.PersonModel;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface VideoStorageRepositoryPort {
-    void store(MultipartFile file, String fileNameStorage);
+    String store(MultipartFile file, String fileNameStorage, String path, PersonModel personModel);
 }

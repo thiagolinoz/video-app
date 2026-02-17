@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface VideoMetadaRepositoryPort {
     List<VideoModel> listVideos(String email);
+    VideoModel save(VideoModel video);
 }

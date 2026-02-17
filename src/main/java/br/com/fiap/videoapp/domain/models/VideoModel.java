@@ -1,9 +1,11 @@
 package br.com.fiap.videoapp.domain.models;
 
+import br.com.fiap.videoapp.domain.enums.VideoStatusEnum;
+
 import java.time.Instant;
 
 public class VideoModel {
-    private String nmPessoaEmail;
+    private String nmPersonEmail;
     private String idVideoSend;
     private String cdVideoStatus;
     private String nmVideo;
@@ -16,7 +18,7 @@ public class VideoModel {
     public VideoModel() {
     }
 
-    public VideoModel(String nmPessoaEmail,
+    public VideoModel(String nmPersonEmail,
                       String idVideoSend,
                       String cdVideoStatus,
                       String nmVideo,
@@ -25,7 +27,7 @@ public class VideoModel {
                       Instant dateTimeVideoCreated,
                       Instant dateTimeVideoProcessCompleted,
                       String nmPersonName) {
-        this.nmPessoaEmail = nmPessoaEmail;
+        this.nmPersonEmail = nmPersonEmail;
         this.idVideoSend = idVideoSend;
         this.cdVideoStatus = cdVideoStatus;
         this.nmVideo = nmVideo;
@@ -36,12 +38,30 @@ public class VideoModel {
         this.nmPersonName = nmPersonName;
     }
 
-    public String getNmPessoaEmail() {
-        return nmPessoaEmail;
+    public static VideoModel buildVideoModel(String idVideo,
+                                             String fileNameStorage,
+                                             String savedFilePath,
+                                             VideoStatusEnum videoStatus,
+                                             PersonModel person){
+    return new VideoModel(
+                person.getNmEmail(),
+                idVideo,
+                videoStatus.name(),
+                fileNameStorage,
+                savedFilePath,
+                null,
+                Instant.now(),
+                null,
+                person.getNmName()
+        );
     }
 
-    public void setNmPessoaEmail(String nmPessoaEmail) {
-        this.nmPessoaEmail = nmPessoaEmail;
+    public String getNmPersonEmail() {
+        return nmPersonEmail;
+    }
+
+    public void setNmPersonEmail(String nmPersonEmail) {
+        this.nmPersonEmail = nmPersonEmail;
     }
 
     public String getIdVideoSend() {

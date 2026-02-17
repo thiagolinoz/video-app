@@ -5,24 +5,40 @@ import java.util.Date;
 
 import br.com.fiap.videoapp.domain.enums.VideoStatusEnum;
 import br.com.fiap.videoapp.domain.models.PersonModel;
+import br.com.fiap.videoapp.domain.models.VideoModel;
 import br.com.fiap.videoapp.domain.models.events.VideoUploadedModel;
 
 public class VideoUploadedMapper {
 
-    public static VideoUploadedModel toVideoUploadedModel(String idVideo,
-                                                          String fileNameStorage,
-                                                          VideoStatusEnum videoStatus,
-                                                          PersonModel person) {
+//    public static VideoUploadedModel toVideoUploadedModel(String idVideo,
+//                                                          String fileNameStorage,
+//                                                          String savedFilePath,
+//                                                          VideoStatusEnum videoStatus,
+//                                                          PersonModel person) {
+//        return new VideoUploadedModel(
+//                person.getNmEmail(),
+//                idVideo,
+//                videoStatus.name(),
+//                fileNameStorage,
+//                savedFilePath,
+//                null,
+//                Date.from(Instant.now()),
+//                null,
+//                person.getNmName()
+//        );
+//    }
+
+    public static VideoUploadedModel toVideoUploadedModel(VideoModel videoModel) {
         return new VideoUploadedModel(
-                person.getNmEmail(),
-                idVideo,
-                videoStatus.name(),
-                fileNameStorage,
-                "paths3/" + fileNameStorage,
+                videoModel.getNmPersonEmail(),
+                videoModel.getIdVideoSend(),
+                videoModel.getCdVideoStatus(),
+                videoModel.getNmVideo(),
+                videoModel.getNmVideoPathOrigin(),
                 null,
-                Date.from(Instant.now()),
+                Date.from(videoModel.getDateTimeVideoCreated()),
                 null,
-                person.getNmName()
+                videoModel.getNmPersonName()
         );
     }
 }

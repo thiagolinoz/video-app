@@ -2,7 +2,10 @@ package br.com.fiap.videoapp.infraestructure.persistence.repositories;
 
 import br.com.fiap.videoapp.domain.models.VideoModel;
 import br.com.fiap.videoapp.domain.ports.out.VideoMetadaRepositoryPort;
+import br.com.fiap.videoapp.infraestructure.commons.mappers.PersonMapper;
 import br.com.fiap.videoapp.infraestructure.commons.mappers.VideoMapper;
+import br.com.fiap.videoapp.infraestructure.commons.mappers.VideoUploadedMapper;
+import br.com.fiap.videoapp.infraestructure.persistence.entities.PersonEntity;
 import br.com.fiap.videoapp.infraestructure.persistence.entities.VideoEntity;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
@@ -34,5 +37,13 @@ public class VideoMetadaRepository implements VideoMetadaRepositoryPort {
                 .toList();
 
         return videoEntities.stream().map(VideoMapper::toModel).toList();
+    }
+
+
+    @Override
+    public VideoModel save(VideoModel video) {
+        VideoEntity videoEntity = VideoMapper.toEntity(video);
+        tableVideo.putItem(videoEntity);
+        return VideoMapper.toModel(videoEntity);
     }
 }
