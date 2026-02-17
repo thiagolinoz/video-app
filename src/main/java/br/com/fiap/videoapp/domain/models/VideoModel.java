@@ -1,9 +1,11 @@
 package br.com.fiap.videoapp.domain.models;
 
+import br.com.fiap.videoapp.domain.enums.VideoStatusEnum;
+
 import java.time.Instant;
 
 public class VideoModel {
-    private String nmPessoaEmail;
+    private String nmPersonEmail;
     private String idVideoSend;
     private String cdVideoStatus;
     private String nmVideo;
@@ -16,7 +18,7 @@ public class VideoModel {
     public VideoModel() {
     }
 
-    public VideoModel(String nmPessoaEmail,
+    public VideoModel(String nmPersonEmail,
                       String idVideoSend,
                       String cdVideoStatus,
                       String nmVideo,
@@ -25,7 +27,7 @@ public class VideoModel {
                       Instant dateTimeVideoCreated,
                       Instant dateTimeVideoProcessCompleted,
                       String nmPersonName) {
-        this.nmPessoaEmail = nmPessoaEmail;
+        this.nmPersonEmail = nmPersonEmail;
         this.idVideoSend = idVideoSend;
         this.cdVideoStatus = cdVideoStatus;
         this.nmVideo = nmVideo;
@@ -36,12 +38,27 @@ public class VideoModel {
         this.nmPersonName = nmPersonName;
     }
 
-    public String getNmPessoaEmail() {
-        return nmPessoaEmail;
+    public VideoModel buildVideoModel(String idVideo, String savedFileName, String savedFilePath, VideoStatusEnum videoStatus, PersonModel person) {
+        VideoModel videoModel = new VideoModel();
+        videoModel.setNmPersonEmail(person.getNmEmail());
+        videoModel.setIdVideoSend(idVideo);
+        videoModel.setCdVideoStatus(videoStatus.name());
+        videoModel.setNmVideo(savedFileName);
+        videoModel.setNmVideoPathOrigin(savedFilePath);
+        videoModel.setNmVideoPathZip(null);
+        videoModel.setDateTimeVideoCreated(Instant.now());
+        videoModel.setDateTimeVideoProcessCompleted(null);
+        videoModel.setNmPersonName(person.getNmName());
+
+        return videoModel;
     }
 
-    public void setNmPessoaEmail(String nmPessoaEmail) {
-        this.nmPessoaEmail = nmPessoaEmail;
+    public String getNmPersonEmail() {
+        return nmPersonEmail;
+    }
+
+    public void setNmPersonEmail(String nmPersonEmail) {
+        this.nmPersonEmail = nmPersonEmail;
     }
 
     public String getIdVideoSend() {
@@ -106,5 +123,20 @@ public class VideoModel {
 
     public void setNmPersonName(String nmPersonName) {
         this.nmPersonName = nmPersonName;
+    }
+
+    @Override
+    public String toString() {
+        return "VideoModel{" +
+                "nmPersonEmail='" + nmPersonEmail + '\'' +
+                ", idVideoSend='" + idVideoSend + '\'' +
+                ", cdVideoStatus='" + cdVideoStatus + '\'' +
+                ", nmVideo='" + nmVideo + '\'' +
+                ", nmVideoPathOrigin='" + nmVideoPathOrigin + '\'' +
+                ", nmVideoPathZip='" + nmVideoPathZip + '\'' +
+                ", dateTimeVideoCreated=" + dateTimeVideoCreated +
+                ", dateTimeVideoProcessCompleted=" + dateTimeVideoProcessCompleted +
+                ", nmPersonName='" + nmPersonName + '\'' +
+                '}';
     }
 }

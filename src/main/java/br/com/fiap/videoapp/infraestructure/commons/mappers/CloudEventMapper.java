@@ -1,6 +1,6 @@
 package br.com.fiap.videoapp.infraestructure.commons.mappers;
 
-import br.com.fiap.videoapp.domain.models.events.VideoUploadedModel;
+import br.com.fiap.videoapp.infraestructure.event.messages.VideoUploadedMessage;
 
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class CloudEventMapper {
 
-    public static Map<String, Object> toCloudEvent(VideoUploadedModel event) {
+    public static Map<String, Object> toCloudEvent(VideoUploadedMessage event) {
         Map<String, Object> envelope = new HashMap<>();
         envelope.put("specversion", "1.0");
         envelope.put("type", "com.video.app.upload");

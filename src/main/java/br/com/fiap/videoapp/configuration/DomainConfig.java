@@ -1,4 +1,4 @@
-package br.com.fiap.videoapp.infraestructure.web.api.configs;
+package br.com.fiap.videoapp.configuration;
 
 import br.com.fiap.videoapp.domain.ports.out.FileEventPublisherPort;
 import br.com.fiap.videoapp.domain.ports.out.PersonRepositoryPort;
@@ -18,15 +18,16 @@ public class DomainConfig {
         return new PersonService(personRepositoryPort);
     }
 
-    @Bean
-    public VideoMetadataService videoService(VideoMetadaRepositoryPort videoMetadaRepositoryPort) {
-        return new VideoMetadataService(videoMetadaRepositoryPort);
-    }
+//    @Bean
+//    public VideoMetadataService videoService(VideoMetadaRepositoryPort videoMetadaRepositoryPort) {
+//        return new VideoMetadataService(videoMetadaRepositoryPort);
+//    }
 
     @Bean
-    public VideoStorageService videoStorageService(VideoStorageRepositoryPort videoStorageRepositoryPort,
+    public VideoStorageService videoStorageService(VideoMetadaRepositoryPort metadaRepositoryPort,
+                                                   VideoStorageRepositoryPort videoStorageRepositoryPort,
                                                    FileEventPublisherPort fileEventPublisherPort,
                                                    PersonRepositoryPort personRepositoryPort) {
-        return new VideoStorageService(videoStorageRepositoryPort, fileEventPublisherPort, personRepositoryPort);
+        return new VideoStorageService(metadaRepositoryPort, videoStorageRepositoryPort, fileEventPublisherPort, personRepositoryPort);
     }
 }

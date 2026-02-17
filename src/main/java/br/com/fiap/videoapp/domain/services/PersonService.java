@@ -3,9 +3,11 @@ package br.com.fiap.videoapp.domain.services;
 import br.com.fiap.videoapp.domain.models.PersonModel;
 import br.com.fiap.videoapp.domain.ports.in.PersonServicePort;
 import br.com.fiap.videoapp.domain.ports.out.PersonRepositoryPort;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class PersonService implements PersonServicePort {
 
     private final PersonRepositoryPort personRepositoryPort;

@@ -20,6 +20,20 @@ public class VideoMapper {
         return videoModel;
     }
 
+    public static VideoEntity toEntity(VideoModel m) {
+        VideoEntity videoEntity = new VideoEntity();
+        videoEntity.setNmPessoaEmail(m.getNmPersonEmail());
+        videoEntity.setIdVideoSend(m.getIdVideoSend());
+        videoEntity.setCdVideoStatus(m.getCdVideoStatus());
+        videoEntity.setNmVideo(m.getNmVideo());
+        videoEntity.setNmVideoPathOrigin(m.getNmVideoPathOrigin());
+        videoEntity.setNmVideoPathZip(m.getNmVideoPathZip());
+        videoEntity.setDateTimeVideoCreated(m.getDateTimeVideoCreated());
+        videoEntity.setDateTimeVideoProcessCompleted(m.getDateTimeVideoProcessCompleted());
+        videoEntity.setNmPersonName(m.getNmPersonName());
+        return videoEntity;
+    }
+
     public static List<VideoResponseDto> toListResponse(List<VideoModel> videoModels) {
         List<VideoResponseDto> listVideos = new ArrayList<>();
         videoModels.forEach(video -> listVideos.add(new VideoResponseDto(video)));

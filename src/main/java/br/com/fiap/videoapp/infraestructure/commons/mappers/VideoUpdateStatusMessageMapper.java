@@ -1,23 +1,21 @@
 package br.com.fiap.videoapp.infraestructure.commons.mappers;
 
-import java.util.Date;
-
 import br.com.fiap.videoapp.domain.models.VideoModel;
+import br.com.fiap.videoapp.infraestructure.event.messages.VideoUpdateStatusMessage;
 import br.com.fiap.videoapp.infraestructure.event.messages.VideoUploadedMessage;
 
-public class VideoUploadedMapper {
+import java.util.Date;
 
-    public static VideoUploadedMessage toVideoUploadedModel(VideoModel videoModel) {
-        return new VideoUploadedMessage(
+public class VideoUpdateStatusMessageMapper {
+
+    public static VideoUpdateStatusMessage toMessage(VideoModel videoModel) {
+        return new VideoUpdateStatusMessage(
                 videoModel.getNmPersonEmail(),
                 videoModel.getIdVideoSend(),
                 videoModel.getCdVideoStatus(),
                 videoModel.getNmVideo(),
-                videoModel.getNmVideoPathOrigin(),
-                null,
-                Date.from(videoModel.getDateTimeVideoCreated()),
-                null,
                 videoModel.getNmPersonName()
         );
     }
+
 }
