@@ -50,16 +50,17 @@ public class VideoStorageService implements VideoStorageServicePort {
 
         if (personByEmail.isEmpty()) throw new RuntimeException("This person does not exists");
 
-        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        VideoStatusEnum videoStatus = VideoStatusEnum.RECEIVED;
         String idVideo = UUID.randomUUID().toString();
+        String fileNameWhitUUID = idVideo + "_" + file.getOriginalFilename();
+        VideoStatusEnum videoStatus = VideoStatusEnum.RECEIVED;
+
 
         try {
             // Upload to S3
-            String savedFilePath = videoStorageRepositoryPort.store(file, fileName, uploadVideoPath, personByEmail.get());
+            String savedFilePath = videoStorageRepositoryPort.store(file, fileNameWhitUUID, uploadVideoPath, personByEmail.get());
 
             VideoModel videoModel = new VideoModel().buildVideoModel(idVideo,
-                    fileName,
+                    file.getOriginalFilename(),
                     savedFilePath,
                     videoStatus,
                     personByEmail.get());

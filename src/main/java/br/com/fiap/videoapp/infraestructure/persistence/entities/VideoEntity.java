@@ -99,4 +99,19 @@ public class VideoEntity {
     public void setNmPersonName(String nmPersonName) {
         this.nmPersonName = nmPersonName;
     }
+
+    @Override
+    public String toString() {
+        return "VideoEntity{" +
+                "nmPessoaEmail='" + nmPessoaEmail + '\'' +
+                ", idVideoSend='" + idVideoSend + '\'' +
+                ", cdVideoStatus='" + cdVideoStatus + '\'' +
+                ", nmVideo='" + nmVideo + '\'' +
+                ", nmVideoPathOrigin='" + nmVideoPathOrigin + '\'' +
+                ", nmVideoPathZip='" + nmVideoPathZip + '\'' +
+                ", dateTimeVideoCreated=" + dateTimeVideoCreated +
+                ", dateTimeVideoProcessCompleted=" + dateTimeVideoProcessCompleted +
+                ", nmPersonName='" + nmPersonName + '\'' +
+                '}';
+    }
 }

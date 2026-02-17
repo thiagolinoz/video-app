@@ -13,4 +13,18 @@ public record VideoUploadedModel(
         Date dateTimeVideoProcessCompleted,
         String nmPersonName
 ) {
+    @Override
+    public String toString() {
+        return "VideoUploadedModel{" +
+                "nmPessoaEmail='" + nmPessoaEmail + '\'' +
+                ", idVideoSend='" + idVideoSend + '\'' +
+                ", cdVideoStatus='" + cdVideoStatus + '\'' +
+                ", nmVideo='" + nmVideo + '\'' +
+                ", nmVideoPathOrigin='" + nmVideoPathOrigin + '\'' +
+                ", nmVideoPathZip='" + nmVideoPathZip + '\'' +
+                ", dateTimeVideoCreated=" + dateTimeVideoCreated +
+                ", dateTimeVideoProcessCompleted=" + dateTimeVideoProcessCompleted +
+                ", nmPersonName='" + nmPersonName + '\'' +
+                '}';
+    }
 }
