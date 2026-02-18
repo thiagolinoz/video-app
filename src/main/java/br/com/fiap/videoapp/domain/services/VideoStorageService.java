@@ -1,5 +1,6 @@
 package br.com.fiap.videoapp.domain.services;
 
+import java.io.InputStream;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -7,6 +8,7 @@ import java.util.logging.Logger;
 
 import br.com.fiap.videoapp.domain.enums.VideoStatusEnum;
 import br.com.fiap.videoapp.domain.models.PersonModel;
+import br.com.fiap.videoapp.domain.models.VideoDownloadModel;
 import br.com.fiap.videoapp.domain.models.VideoModel;
 import br.com.fiap.videoapp.domain.ports.in.VideoStorageServicePort;
 import br.com.fiap.videoapp.domain.ports.out.FileEventPublisherPort;
@@ -78,5 +80,21 @@ public class VideoStorageService implements VideoStorageServicePort {
             videoStatus = VideoStatusEnum.PROCESS_ERROR;
             logger.log(Level.SEVERE, "An error occurred to upload a file", e);
         }
+    }
+    @Override
+    public VideoDownloadModel downloadVideo(String email, String idVideo) {
+        Optional<VideoModel> videoModel = videoMetadaRepositoryPort.findBy(email, idVideo);
+
+        if (videoModel.isEmpty()) throw new RuntimeException("This person dont have access to this video");
+
+        InputStream file = videoStorageRepositoryPort.download(videoModel.get().getNmVideoPathOrigin());
+
+        String fileName = extractFileName(videoModel.get().getNmVideoPathOrigin());
+
+        return new VideoDownloadModel(fileName, file);
+    }
+
+    private String extractFileName(String key) {
+        return key.substring(key.lastIndexOf("/") + 1);
     }
 }

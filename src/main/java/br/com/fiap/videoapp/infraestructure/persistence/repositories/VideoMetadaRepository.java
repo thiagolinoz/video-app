@@ -13,9 +13,11 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.model.PageIterable;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,7 +37,7 @@ public class VideoMetadaRepository implements VideoMetadaRepositoryPort {
         QueryConditional queryConditional = QueryConditional.keyEqualTo(Key.builder().partitionValue(email).build());
 
         List<VideoEntity> videoEntities = tableVideo.query(r -> r.queryConditional(queryConditional)
-                .scanIndexForward(false))
+                        .scanIndexForward(false))
                 .items()
                 .stream()
                 .toList();
@@ -50,5 +52,21 @@ public class VideoMetadaRepository implements VideoMetadaRepositoryPort {
         logger.log(Level.INFO, "Saving VideoEntity = ", videoEntity.toString());
         tableVideo.putItem(videoEntity);
         return VideoMapper.toModel(videoEntity);
+    }
+
+    @Override
+    public Optional<VideoModel> findBy(String email, String idVideo) {
+        QueryConditional queryConditional = QueryConditional.keyEqualTo(Key.builder()
+                .partitionValue(email)
+                .sortValue(idVideo)
+                .build());
+
+        PageIterable<VideoEntity> results = tableVideo.query(r -> r.queryConditional(queryConditional));
+
+
+        return results.stream()
+                .flatMap(page -> page.items().stream())
+                .findFirst()
+                .map(VideoMapper::toModel);
     }
 }

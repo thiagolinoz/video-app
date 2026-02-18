@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.S3ClientBuilder;
 import software.amazon.awssdk.services.s3.S3CrtAsyncClientBuilder;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
 
@@ -43,6 +45,21 @@ public class S3Config {
         return S3TransferManager.builder()
                 .s3Client(s3AsyncClient)
                 .build();
+    }
+
+    @Bean
+    public S3Client s3Client() {
+
+        S3ClientBuilder builder = S3Client.builder()
+                .region(Region.of(region))
+                .credentialsProvider(credentialsProvider());
+
+        if (isLocal) {
+            builder.endpointOverride(URI.create(endpoint))
+                    .forcePathStyle(true); // obrigatório para LocalStack
+        }
+
+        return builder.build();
     }
 
     private DefaultCredentialsProvider credentialsProvider() {
