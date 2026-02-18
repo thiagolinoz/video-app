@@ -61,7 +61,7 @@ public class VideoStorageRepository implements VideoStorageRepositoryPort {
             transferManager.upload(uploadRequest)
                     .completionFuture()
                     .join();
-            return bucketName + "/" + pathValue;
+            return pathValue;
         } catch (IOException e) {
             throw new RuntimeException("Error uploading video to bucket", e);
         }

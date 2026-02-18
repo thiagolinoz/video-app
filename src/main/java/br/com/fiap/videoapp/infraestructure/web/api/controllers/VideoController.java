@@ -48,7 +48,7 @@ public class VideoController {
 
     @GetMapping("/user/{email}/videos/{idVideo}/download")
     public ResponseEntity<InputStreamResource> downloadVideo(@PathVariable("email") String email, @PathVariable("idVideo") String idVideo) {
-        VideoDownloadModel stream = videoMetadataServicePort.downloadVideo(email, idVideo);
+        VideoDownloadModel stream = videoStorageServicePort.downloadVideo(email, idVideo);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,

@@ -17,11 +17,9 @@ import java.util.Optional;
 public class VideoMetadataService implements VideoMetadataServicePort {
 
     private final VideoMetadaRepositoryPort videoMetadaRepositoryPort;
-    private final VideoStorageRepositoryPort videoStorageRepositoryPort;
 
-    public VideoMetadataService(VideoMetadaRepositoryPort videoMetadaRepositoryPort, VideoStorageRepositoryPort videoStorageRepositoryPort) {
+    public VideoMetadataService(VideoMetadaRepositoryPort videoMetadaRepositoryPort) {
         this.videoMetadaRepositoryPort = videoMetadaRepositoryPort;
-        this.videoStorageRepositoryPort = videoStorageRepositoryPort;
     }
 
     @Override
@@ -29,20 +27,5 @@ public class VideoMetadataService implements VideoMetadataServicePort {
         return videoMetadaRepositoryPort.listVideos(email);
     }
 
-    @Override
-    public VideoDownloadModel downloadVideo(String email, String idVideo) {
-        Optional<VideoModel> videoModel = videoMetadaRepositoryPort.findBy(email, idVideo);
 
-        if (videoModel.isEmpty()) throw new RuntimeException("This person dont have access to this video");
-
-        InputStream file = videoStorageRepositoryPort.download(videoModel.get().getNmVideoPathOrigin());
-
-        String fileName = extractFileName(videoModel.get().getNmVideoPathOrigin());
-
-        return new VideoDownloadModel(fileName, file);
-    }
-
-    private String extractFileName(String key) {
-        return key.substring(key.lastIndexOf("/") + 1);
-    }
 }

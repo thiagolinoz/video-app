@@ -9,5 +9,4 @@ import java.util.List;
 
 public interface VideoMetadataServicePort {
     List<VideoModel> listVideos(String email);
-    VideoDownloadModel downloadVideo(String email, String idVideo);
 }

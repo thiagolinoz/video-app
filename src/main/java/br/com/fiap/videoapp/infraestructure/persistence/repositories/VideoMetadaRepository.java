@@ -13,6 +13,7 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.model.PageIterable;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 
 import java.util.List;
@@ -59,7 +60,13 @@ public class VideoMetadaRepository implements VideoMetadaRepositoryPort {
                 .partitionValue(email)
                 .sortValue(idVideo)
                 .build());
-        VideoEntity entity = (VideoEntity) tableVideo.query(queryConditional); //(VideoModel) tableVideo.query(r -> r.queryConditional(queryConditional).scanIndexForward(false));
-        return Optional.of(VideoMapper.toModel(entity));
+
+        PageIterable<VideoEntity> results = tableVideo.query(r -> r.queryConditional(queryConditional));
+
+
+        return results.stream()
+                .flatMap(page -> page.items().stream())
+                .findFirst()
+                .map(VideoMapper::toModel);
     }
 }
