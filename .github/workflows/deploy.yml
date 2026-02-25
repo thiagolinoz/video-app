@@ -2,7 +2,7 @@ name: CI/CD com Dockerfile
 
 on:
   push:
-    branches: [main, master, fase1]
+    branches: [main, master, fase1, fase1-dockerizado]
 
 env:
   EKS_CLUSTER_NAME: eks-postech-fiap-video
