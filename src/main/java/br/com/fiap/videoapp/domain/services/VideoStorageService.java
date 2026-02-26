@@ -87,9 +87,9 @@ public class VideoStorageService implements VideoStorageServicePort {
 
         if (videoModel.isEmpty()) throw new RuntimeException("This person dont have access to this video");
 
-        InputStream file = videoStorageRepositoryPort.download(videoModel.get().getNmVideoPathOrigin());
+        InputStream file = videoStorageRepositoryPort.download(videoModel.get().getNmVideoPathZip());
 
-        String fileName = extractFileName(videoModel.get().getNmVideoPathOrigin());
+        String fileName = extractFileName(videoModel.get().getNmVideoPathZip());
 
         return new VideoDownloadModel(fileName, file);
     }
