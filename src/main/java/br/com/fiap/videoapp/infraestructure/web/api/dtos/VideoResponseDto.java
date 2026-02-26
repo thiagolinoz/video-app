@@ -6,6 +6,7 @@ import java.time.Instant;
 
 public record VideoResponseDto(
         String nmVideo,
+        String idVideoSend,
         String cdVideoStatus,
         String nmVideoPathOrigin,
         String nmVideoPathZip,
@@ -14,6 +15,7 @@ public record VideoResponseDto(
 ) {
     public VideoResponseDto(VideoModel videoModel) {
         this(videoModel.getNmVideo(),
+                videoModel.getIdVideoSend(),
                 videoModel.getCdVideoStatus(),
                 videoModel.getNmVideoPathOrigin(),
                 videoModel.getNmVideoPathZip(),
