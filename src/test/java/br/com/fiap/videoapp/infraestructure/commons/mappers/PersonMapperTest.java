@@ -12,10 +12,13 @@ class PersonMapperTest {
     @Test
     @DisplayName("Deve converter PersonEntity para PersonModel corretamente")
     void toModel_Success() {
+        //Given "que existe uma PersonEntity com email, nome e senha ")
         PersonEntity entity = new PersonEntity("test@email.com", "Test User", "secret");
 
+        //When "eu converter a PersonEntity para PersonModel"
         PersonModel model = PersonMapper.toModel(entity);
 
+        //Then "deve retornar um PersonModel com os mesmos valores"
         assertThat(model).isNotNull();
         assertThat(model.getNmEmail()).isEqualTo("test@email.com");
         assertThat(model.getNmName()).isEqualTo("Test User");
