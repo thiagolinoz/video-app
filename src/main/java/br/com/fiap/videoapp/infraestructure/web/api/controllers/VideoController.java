@@ -8,6 +8,7 @@ import br.com.fiap.videoapp.infraestructure.commons.mappers.VideoMapper;
 import br.com.fiap.videoapp.infraestructure.web.api.dtos.VideoResponseDto;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -41,9 +42,15 @@ public class VideoController {
     }
 
     @PostMapping("/user/{email}/videos/upload")
-    public ResponseEntity<Void> uploadVideo(@RequestParam("file") MultipartFile file, @PathVariable("email") String email) {
-        videoStorageServicePort.store(file, email);
-        return ResponseEntity.created(URI.create("/api/v1/user/videos/upload")).build();
+    public ResponseEntity<Void> uploadVideo(@RequestParam("file") MultipartFile[] files, @PathVariable("email") String email) {
+        try {
+            for (MultipartFile file : files) {
+                videoStorageServicePort.store(file, email);
+            }
+            return ResponseEntity.created(URI.create("/api/v1/user/videos/upload")).build();
+        } catch (Exception e ) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/user/{email}/videos/{idVideo}/download")
