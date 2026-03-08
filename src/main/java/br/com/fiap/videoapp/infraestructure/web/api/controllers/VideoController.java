@@ -52,18 +52,17 @@ public class VideoController {
     }
 
     @PostMapping("/user/{email}/videos/upload")
-    public ResponseEntity<Void> uploadVideo(@RequestParam("file") MultipartFile file, @PathVariable("email") String email, @RequestHeader(value = "Authorization", required = false) String authorizationHeader) {
-        if (isAuth(authorizationHeader,email)) {
+    public ResponseEntity<Void> uploadVideo(@RequestParam("file") MultipartFile file, @PathVariable("email") String email) {
+        //if (isAuth(authorizationHeader,email)) {
             videoStorageServicePort.store(file, email);
 
             return ResponseEntity.created(URI.create("/api/v1/user/videos/upload")).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        //} else {
+            //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        //}
     }
 
     @GetMapping("/user/{email}/videos/{idVideo}/download")
-    //TODO: Adicionar queryParam para indicar se quer baixar o arquivo original ou o zip
     public ResponseEntity<InputStreamResource> downloadVideo(@PathVariable("email") String email, @PathVariable("idVideo") String idVideo, @RequestHeader(value = "Authorization", required = false) String authorizationHeader) {
         if(isAuth(authorizationHeader,email)) {
             VideoDownloadModel stream = videoStorageServicePort.downloadVideo(email, idVideo);
