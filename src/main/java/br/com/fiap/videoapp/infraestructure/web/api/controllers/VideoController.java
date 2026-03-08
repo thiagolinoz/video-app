@@ -63,7 +63,6 @@ public class VideoController {
     }
 
     @GetMapping("/user/{email}/videos/{idVideo}/download")
-    //TODO: Adicionar queryParam para indicar se quer baixar o arquivo original ou o zip
     public ResponseEntity<InputStreamResource> downloadVideo(@PathVariable("email") String email, @PathVariable("idVideo") String idVideo, @RequestHeader(value = "Authorization", required = false) String authorizationHeader) {
         if(isAuth(authorizationHeader,email)) {
             VideoDownloadModel stream = videoStorageServicePort.downloadVideo(email, idVideo);
