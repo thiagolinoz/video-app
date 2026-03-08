@@ -11,6 +11,7 @@ public class VideoMapper {
 
     public static VideoModel toModel(VideoEntity video) {
         VideoModel videoModel = new VideoModel();
+        videoModel.setIdVideoSend(video.getIdVideoSend());
         videoModel.setNmVideo(video.getNmVideo());
         videoModel.setCdVideoStatus(video.getCdVideoStatus());
         videoModel.setNmVideoPathOrigin(video.getNmVideoPathOrigin());

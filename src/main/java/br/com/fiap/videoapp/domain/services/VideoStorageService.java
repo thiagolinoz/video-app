@@ -81,15 +81,23 @@ public class VideoStorageService implements VideoStorageServicePort {
             logger.log(Level.SEVERE, "An error occurred to upload a file", e);
         }
     }
+
+    @Override
+    public Optional<PersonModel> getUser(String email) {
+        Optional<PersonModel> personByEmail = personRepositoryPort.getPersonByEmail(email);
+        if (personByEmail.isEmpty()) throw new RuntimeException("This person does not exists");
+        return personByEmail;
+    }
+
     @Override
     public VideoDownloadModel downloadVideo(String email, String idVideo) {
         Optional<VideoModel> videoModel = videoMetadaRepositoryPort.findBy(email, idVideo);
 
         if (videoModel.isEmpty()) throw new RuntimeException("This person dont have access to this video");
 
-        InputStream file = videoStorageRepositoryPort.download(videoModel.get().getNmVideoPathOrigin());
+        InputStream file = videoStorageRepositoryPort.download(videoModel.get().getNmVideoPathZip());
 
-        String fileName = extractFileName(videoModel.get().getNmVideoPathOrigin());
+        String fileName = extractFileName(videoModel.get().getNmVideoPathZip());
 
         return new VideoDownloadModel(fileName, file);
     }

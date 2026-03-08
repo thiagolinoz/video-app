@@ -70,18 +70,14 @@ public class VideoStorageRepository implements VideoStorageRepositoryPort {
     @Override
     public InputStream download(String key) {
         try{
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-            s3Client.getObject(
+            return s3Client.getObject(
                     GetObjectRequest.builder()
                             .bucket(bucketName)
                             .key(key)
                             .build(),
-                    ResponseTransformer.toOutputStream(outputStream)
+                    ResponseTransformer.toInputStream()
             );
 
-            InputStream stream = new ByteArrayInputStream(outputStream.toByteArray());
-            return stream;
         } catch (Exception e) {
             throw new RuntimeException("Error to download video from bucket", e);
         }

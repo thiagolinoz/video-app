@@ -3,6 +3,7 @@ package br.com.fiap.videoapp.infraestructure.web.api.controllers;
 import br.com.fiap.videoapp.domain.models.PersonModel;
 import br.com.fiap.videoapp.domain.ports.in.PersonServicePort;
 import br.com.fiap.videoapp.infraestructure.web.api.dtos.PersonRequestDto;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ public class PersonController {
     }
 
     @PostMapping("/user/new")
-    public ResponseEntity<Void> createPerson(@RequestBody PersonRequestDto personRequestDto) {
+    public ResponseEntity<Void> createPerson(@Valid @RequestBody PersonRequestDto personRequestDto) {
         PersonModel personModel = personServicePort.createPerson(toModel(personRequestDto));
 
         return ResponseEntity.created(URI.create("/api/v1/user/new")).build();
